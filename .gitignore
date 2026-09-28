@@ -1,0 +1,13 @@
+# Virtual env for containers
+*.env
+*.venv
+
+# Terraform files
+*terraform.*
+*.terraform*
+
+# Migration folder
+**/migration/*tar.gz
+
+# OpenTofu outputs
+**/inventory/outputs/*.yml

@@ -1,0 +1,30 @@
+services:
+  # Infrastructure as code
+  opentofu:
+    image: smith-lab-opentofu:latest
+    build:
+      context: ./infrastructure/opentofu/install
+    container_name: tofu
+    stdin_open: true
+    tty: true
+    env_file:
+      - .env
+    volumes:
+      - .:/tofu:Z
+    working_dir: /tofu/infrastructure/opentofu
+    command: /bin/bash
+  
+  # Configuration engine
+  ansible:
+    image: smith-lab-ansible:latest
+    build:
+      context: ./infrastructure/ansible/install
+    container_name: ansible
+    stdin_open: true
+    tty: true
+    volumes:
+      - .:/ansible:Z
+      - ${HOME}/.ssh:/root/.ssh:ro,Z
+    working_dir: /ansible/infrastructure/ansible
+    command: /bin/bash
+    
