@@ -1,0 +1,10 @@
+---
+- hosts: localhost
+  tasks:
+    - name: Include Host Model
+      include_vars:
+        file: ../inventory/outputs/hosts.yml
+
+    - name: Include Network Model
+      include_vars:
+        file: ../inventory/outputs/networks.yml

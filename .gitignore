@@ -10,4 +10,4 @@
 **/migration/*tar.gz
 
 # OpenTofu outputs
-**/inventory/outputs/*.yml
+**/inventory/*.yml

@@ -10,7 +10,7 @@ services:
     env_file:
       - .env
     volumes:
-      - .:/tofu:Z
+      - .:/tofu:z
     working_dir: /tofu/infrastructure/opentofu
     command: /bin/bash
   
@@ -18,12 +18,14 @@ services:
   ansible:
     image: smith-lab-ansible:latest
     build:
-      context: ./infrastructure/ansible/install
+      context: ./infrastructure/ansible
     container_name: ansible
     stdin_open: true
     tty: true
+    environment:
+      ANSIBLE_CONFIG: /ansible/infrastructure/ansible/ansible.cfg
     volumes:
-      - .:/ansible:Z
+      - .:/ansible:z
       - ${HOME}/.ssh:/root/.ssh:ro,Z
     working_dir: /ansible/infrastructure/ansible
     command: /bin/bash

@@ -1,0 +1,48 @@
+---
+- hosts: localhost
+  connection: local
+  gather_facts: true
+
+  tasks:
+    - name: Display Host
+      debug:
+        msg:
+        - "Source: {{ ansible_facts.fqdn }}"
+        - "Target: {{ target_host }}"
+
+    - name: Discover Hosts
+      include_vars:
+        file: ../inventory/hosts.yml
+
+    - name: Validate target_host
+      assert:
+        that:
+          - target_host is defined
+          - target_host in smith_hosts
+        fail_msg: "target_host must exist in hosts.yml"
+        success_msg: "target_host is valid"
+
+    - name: Discover Networks
+      include_vars:
+        file: ../inventory/networks.yml
+    
+    - name: Find Host Network
+      set_fact:
+        host_network: "{{ smith_hosts[target_host].network }}"
+
+    - name: Find Domain Settings
+      set_fact:
+        dns_host: "{{ networks[host_network].domain.dns_host }}"
+        domain_name: "{{ networks[host_network].domain.name }}"
+    
+    - name: Find DNS Server
+      set_fact:
+        dns_server: "{{ smith_hosts[dns_host].ip }}"
+
+    - name: Display settings
+      debug:
+        msg:
+          - "Network: {{ host_network }}"
+          - "Domain: {{ domain_name }}"
+          - "DNS Host: {{ dns_host }}"
+          - "DNS Server: {{ dns_server }}"

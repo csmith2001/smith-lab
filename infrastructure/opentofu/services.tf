@@ -37,6 +37,10 @@ locals {
     }
 }
 
-output "services" {
-    value = local.services
+resource "local_file" "ansible_services" {
+  filename = "${path.root}/../ansible/inventory/services.yml"
+
+  content    = yamlencode ({
+    services = local.services
+  })
 }

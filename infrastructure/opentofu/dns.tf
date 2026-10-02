@@ -6,16 +6,20 @@ locals {
     proxied = true
     ttl     = 1
   }
+
   dns_records = {
     ad = {
       service = "samba"
     }
+
     git = {
       service = "gitlab"
     }
+
     nvr = {
       host = "nvr"
     }
+
     vault = {
       service = "vaultwarden"
     }
@@ -32,6 +36,10 @@ resource "cloudflare_dns_record" "dns" {
   ttl      = try(each.value.ttl, local.defaults.ttl)
 }
 
-output "dns_records" {
-    value = local.dns_records
+resource "local_file" "ansible_dns_names" {
+  filename = "${path.root}/../ansible/inventory/dns.yml"
+
+  content = yamlencode ({
+    dns   = local.dns_records
+  })
 }

@@ -1,0 +1,7 @@
+"volumes":
+  "backups":
+    "path": "/srv/infra/backups"
+  "containers":
+    "path": "/srv/infra/containers"
+  "media":
+    "path": "/srv/infra/media"

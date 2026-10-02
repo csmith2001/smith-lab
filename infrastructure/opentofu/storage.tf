@@ -13,6 +13,10 @@ locals {
   }
 }
 
-output "storage" {
-    value = local.storage
+resource "local_file" "ansible_storage_pools" {
+  filename = "${path.root}/outputs/storage.yml"
+
+  content   = yamlencode ({
+    volumes = local.storage
+  })
 }
