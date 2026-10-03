@@ -1,0 +1,7 @@
+before_script:
+  - ./bootstrap.sh
+
+deploy:
+  script:
+    - tofu apply -auto-approve
+    - podman compose up -d
