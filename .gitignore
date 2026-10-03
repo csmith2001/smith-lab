@@ -3,8 +3,9 @@
 *.venv
 
 # Terraform files
-*terraform.*
+*terraform.tfstate*
 *.terraform*
+terraform.tfvars
 
 # Ansible inventory files
 **/inventories/**/**.yml
