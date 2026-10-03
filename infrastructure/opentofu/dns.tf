@@ -6,26 +6,30 @@ locals {
     proxied = true
     ttl     = 1
   }
-
+  # -------------------
   dns_records = {
     ad = {
-      service = "samba"
+      target = "smith-lab"
     }
-
+    # ------------------
     git = {
-      service = "gitlab"
+      target = "smith-lab"
     }
-
+    # ------------
     nvr = {
-      host = "nvr"
+      target = "nvr"
     }
-
+    # -----------------------
     vault = {
-      service = "vaultwarden"
+      target = "smith-lab"
+    }
+    # ---------------------
+    ansible = {
+      target = "smith-lab"
     }
   }
 }
-
+# ----------------------------------------------------------
 resource "cloudflare_dns_record" "dns" {
   for_each = local.dns_records
   name     = each.key
@@ -34,12 +38,4 @@ resource "cloudflare_dns_record" "dns" {
   content  = try(each.value.content, local.defaults.content)
   proxied  = try(each.value.proxied, local.defaults.proxied)
   ttl      = try(each.value.ttl, local.defaults.ttl)
-}
-
-resource "local_file" "ansible_dns_names" {
-  filename = "${path.root}/../ansible/inventory/dns.yml"
-
-  content = yamlencode ({
-    dns   = local.dns_records
-  })
 }

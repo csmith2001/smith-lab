@@ -6,8 +6,5 @@
 *terraform.*
 *.terraform*
 
-# Migration folder
-**/migration/*tar.gz
-
-# OpenTofu outputs
-**/inventory/*.yml
+# Ansible inventory files
+**/inventories/**/**.yml

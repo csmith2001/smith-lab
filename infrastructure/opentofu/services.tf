@@ -1,46 +1,62 @@
 locals {
     services = {
-        caddy = {
-            host         = "smith-lab"           
-            service_type = "reverse-proxy"
-            storage      = "containers"
-            critical     = true
-            backup       = true
-        }
-
-        vaultwarden = {
-            host         = "smith-lab"
-            dns          = "vault"           
-            service_type = "password-manager"
-            storage      = "containers"
-            critical     = true
-            backup       = true
-        }
-        
-        samba = {
-            host         = "smith-lab"
-            dns          = "ad"           
+        samba            = {
+            dns          = "ad"
+            targets      = ["smith-lab"]
+            deployment   = "host"
+            # group        = "domain-staff"
             service_type = "identity"
-            storage      = "containers"
             critical     = true
             backup       = true
         }
-        
-        gitlab = {
-            host         = "smith-lab"
+        # --------------------------------
+        caddy            = {
+            targets      = ["smith-lab"]
+            deployment   = "container"
+            # group        = "caddy-staff"
+            service_type = "reverse-proxy"
+            critical     = true
+            backup       = true
+        }
+        # -----------------------------------
+        vaultwarden      = {
+            dns          = "vault"
+            targets      = ["smith-lab"]
+            deployment   = "container"
+            # group        = "vaultwarden-staff"
+            service_type = "password-manager"
+            critical     = true
+            backup       = true
+        }
+        # ----------------------------------
+        gitlab           = {
             dns          = "git"
+            targets      = ["smith-lab"]
+            deployment   = "container"
+            # group        = "gitlab-staff"
             service_type = "version-control"
-            storage      = "containers"
             critical     = false
+            backup       = true
+        }
+        # -----------------------------
+        gitlab_runner    = {
+            targets      = ["smith-lab"]
+            deployment   = "container"
+            # group        = "gitlab-staff"
+            service_type = "ci-runner"
+            critical     = true
+            backup       = true
+        }
+        # -----------------------------
+        semaphore        = {
+            dns          = "ansible"
+            targets      = ["smith-lab"]
+            deployment   = "container"
+            # group        = "ansible-staff"
+            service_type = "automation"
+            critical     = true
             backup       = true
         }
     }
 }
 
-resource "local_file" "ansible_services" {
-  filename = "${path.root}/../ansible/inventory/services.yml"
-
-  content    = yamlencode ({
-    services = local.services
-  })
-}

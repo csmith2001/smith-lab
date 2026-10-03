@@ -1,0 +1,26 @@
+---
+- name: Bootstrap Infrastructure
+  hosts: "{{ target_host }}"
+  become: true
+  gather_facts: true
+
+  roles:
+    - common
+
+    # - name: Install bootstrap packages
+    #   package:
+    #     name:
+    #       - git
+    #       - podman
+    #       - podman-compose
+    #       - curl
+    #       - rsync
+    #       - jq
+    #       - unzip
+    #     state: present
+
+    # - name: Enable podman socket
+    #   systemd:
+    #     name: podman.socket
+    #     enabled: true
+    #     state: started

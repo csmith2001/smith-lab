@@ -1,0 +1,4 @@
+---
+- name: Vaultwarden
+  debug:
+    msg: "Hello"

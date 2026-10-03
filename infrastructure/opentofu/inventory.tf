@@ -1,20 +1,16 @@
 locals {
   inventory = {
-    for host_type, config in local.host_types :
-    config.group => {
-      hosts = {
-        for host_name, host in local.hosts :
-        host_name => {
-          ansible_host = try(host.ip, null)
+    all = {
+      children = {
+        for ansible_host_type, config in local.host_types :
+        config.group => {
+          hosts = {
+            for host_name, host in local.hosts :
+            host_name => { }
+            if host.ansible_host_type == ansible_host_type
+          }
         }
-        if host.host_type == host_type
       }
     }
   }
-}
-
-resource "local_file" "ansible_inventory" {
-  filename = "${path.root}/../ansible/inventory/inventory.yml"
-
-  content = yamlencode(local.inventory)
 }

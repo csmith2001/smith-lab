@@ -1,22 +1,28 @@
 locals {
-  storage_root = "/srv/infra"
+  infra_root = "/srv/infra"
   storage = {
-    backups = {
-      path = "${local.storage_root}/backups"
-    }
-    media = {
-      path = "${local.storage_root}/media"
-    }
     containers = {
-      path = "${local.storage_root}/containers"
+      path = "${local.infra_root}/containers"
+    }
+
+    configs = {
+      path = "${local.infra_root}/configs"
+    }
+
+    media = {
+      path = "${local.infra_root}/media"
+    }
+
+    logs = {
+      path = "${local.infra_root}/logs"
+    }
+
+    backups = {
+      path = "${local.infra_root}/backups"
+    }
+
+    samba = {
+      path = "${local.infra_root}/samba"
     }
   }
-}
-
-resource "local_file" "ansible_storage_pools" {
-  filename = "${path.root}/outputs/storage.yml"
-
-  content   = yamlencode ({
-    volumes = local.storage
-  })
 }

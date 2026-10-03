@@ -1,0 +1,4 @@
+---
+- name: Semaphore
+  debug:
+    msg: "Hello"

@@ -1,0 +1,22 @@
+services:
+  gitlab-runner-gitlab:
+    image: docker.io/gitlab/gitlab-runner:latest
+    restart: unless-stopped
+
+    environment:
+      GITLAB_URL: https://gitlab.com
+      RUNNER_TOKEN: "{{ lookup('env', 'GITLAB_RUNNER_TOKEN') }}"
+
+    volumes:
+      - ./gitlab:/etc/gitlab-runner:z
+
+  gitlab-runner-smithlab:
+    image: docker.io/gitlab/gitlab-runner:latest
+    restart: unless-stopped
+
+    environment:
+      GITLAB_URL: https://git.smith-lab.xyz
+      RUNNER_TOKEN: "{{ lookup('env', 'GITLAB_RUNNER_TOKEN') }}"
+
+    volumes:
+      - ./smithlab:/etc/gitlab-runner:z
