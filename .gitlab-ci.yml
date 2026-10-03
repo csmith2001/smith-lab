@@ -11,5 +11,6 @@ build:
 
 deploy:
   script:
-    - tofu apply -auto-approve
-    - podman compose up -d
+    - echo "hello world"
+    # - tofu apply -auto-approve
+    # - podman compose up -d
