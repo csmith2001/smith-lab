@@ -1,4 +1,27 @@
 ---
+- name: Discover host services
+  set_fact:
+    host_services: >-
+      {{
+        services
+        | dict2items
+        | selectattr('value.targets', 'contains', inventory_hostname)
+        | list
+      }}
+
+- name: Determine container services
+  set_fact:
+    container_services: >-
+      {{
+        host_services
+        | selectattr('value.deployment', 'equalto', 'container')
+        | list
+      }}
+
+- name: Display host services
+  debug:
+    msg: "{{ host_services }}"
+
 - name: Create infrastructure root
   file:
     path: /srv/infra
@@ -32,3 +55,11 @@
     group: root
     mode: "2755"
   loop: "{{ container_services }}"
+
+- name: Clone repositories
+  git:
+    repo: "{{ item.value.url }}"
+    dest: "/srv/infra/repos/{{ item.key }}"
+    version: "{{ item.value.branch }}"
+    update: true
+  loop: "{{ repositories | dict2items }}"
