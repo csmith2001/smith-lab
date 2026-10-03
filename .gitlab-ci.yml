@@ -1,5 +1,13 @@
-before_script:
-  - ./bootstrap.sh
+build:
+  script:
+    - mkdir -p "${INFRA_ROOT}"
+    - mkdir -p "${INFRA_ROOT}/containers"
+    - mkdir -p "${INFRA_ROOT}/configs"
+    - mkdir -p "${INFRA_ROOT}/media"
+    - mkdir -p "${INFRA_ROOT}/logs"
+    - mkdir -p "${INFRA_ROOT}/backups"
+    - mkdir -p "${INFRA_ROOT}/samba"
+    - mkdir -p "${INFRA_ROOT}/repos"
 
 deploy:
   script:
