@@ -23,7 +23,7 @@ echo
 
 for dir in "${required_dirs[@]}"
 do  
-    echo "Creating: $dir..."
+    echo "Creating: '$dir'"
     sudo mkdir -p "$dir"
 
     echo "Changing permissions..."
