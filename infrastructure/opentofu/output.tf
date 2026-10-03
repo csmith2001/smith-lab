@@ -18,7 +18,7 @@ resource "local_file" "host_vars" {
   content = yamlencode({
     ansible_network   = try(each.value.ansible_network, null)
     ansible_managed   = try(each.value.ansible_managed, false)
-    ansible_runner    = try(each.value.runner, false)
+    ansible_runner    = try(each.value.ansible_runner, false)
     critical          = try(each.value.critical, false)
     ansible_host_type = each.value.ansible_host_type
     disks             = try(each.value.disks, {})
@@ -30,7 +30,6 @@ resource "local_file" "group_vars" {
   # ---------------------------------
   content = yamlencode ({
     dns          = local.dns_records
-    volumes      = local.storage
     networks     = local.networks
     repositories = local.repositories
     services     = local.services

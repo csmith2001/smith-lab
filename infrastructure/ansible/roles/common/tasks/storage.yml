@@ -22,31 +22,6 @@
   debug:
     msg: "{{ host_services }}"
 
-- name: Create infrastructure root
-  file:
-    path: /srv/infra
-    state: directory
-    owner: root
-    group: root
-    mode: "2755"
-
-- name: Create repo folder
-  file:
-    path: /srv/infra/repos
-    state: directory
-    owner: root
-    group: root
-    mode: "2755"
-
-- name: Create storage volumes
-  file:
-    path: "{{ item.value.path }}"
-    state: directory
-    owner: root
-    group: root
-    mode: "2755"
-  loop: "{{ volumes | dict2items }}"
-
 - name: Create service storage
   file:
     path: "/srv/infra/containers/{{ item.key }}"

@@ -1,22 +1,28 @@
 #!/bin/bash
 set -euo pipefail
 
+INFRA_ROOT=$(
+  grep '^INFRA_ROOT=' .env |
+  cut -d= -f2 |
+  tr -d '"'
+)
+
 required_dirs=(
-    "/srv/infra"
-    "/srv/infra/containers"
-    "/srv/infra/configs"
-    "/srv/infra/media"
-    "/srv/infra/logs"
-    "/srv/infra/backups"
-    "/srv/infra/samba"
-    "/srv/infra/repos"
+    "${INFRA_ROOT}"
+    "${INFRA_ROOT}/containers"
+    "${INFRA_ROOT}/configs"
+    "${INFRA_ROOT}/media"
+    "${INFRA_ROOT}/logs"
+    "${INFRA_ROOT}/backups"
+    "${INFRA_ROOT}/samba"
+    "${INFRA_ROOT}/repos"
 )
 
 echo "Creating infrastructure folders..."
 for dir in "${required_dirs[@]}"
 do
-    mkdir -p "$dir"
-    chmod 2755 "$dir"
+    sudo mkdir -p "$dir"
+    sudo chmod 2755 "$dir"
 done
 
 echo "Folders created."

@@ -4,7 +4,7 @@
     msg:
       - "Host: {{ inventory_hostname }}"
       - "OS: {{ ansible_facts['os_family'] }}"
-      - "Disk(s): {{ volumes }}"
+      - "Disks: {{ disks }}"
 
 - name: Create Folders
   import_tasks: storage.yml
