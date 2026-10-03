@@ -20,9 +20,14 @@ required_dirs=(
 
 echo "Creating infrastructure folders..."
 for dir in "${required_dirs[@]}"
-do
+do  
+    echo "Creating: $dir..."
     sudo mkdir -p "$dir"
+    
+    echo "Changing permissions..."
     sudo chmod 2755 "$dir"
+
+    echo "Done."
 done
 
 echo "Folders created."
