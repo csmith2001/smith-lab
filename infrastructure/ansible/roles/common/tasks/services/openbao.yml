@@ -1,0 +1,4 @@
+---
+- name: OpenBao
+  debug:
+    msg: "Hello"

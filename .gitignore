@@ -9,3 +9,8 @@ terraform.tfvars
 
 # Ansible inventory files
 **/inventories/**/**.yml
+
+# Secrets
+secrets.yaml
+age.key
+**/migration

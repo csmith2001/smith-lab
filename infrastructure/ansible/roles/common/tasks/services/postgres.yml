@@ -1,0 +1,4 @@
+---
+- name: Postgres
+  debug:
+    msg: "Hello"
