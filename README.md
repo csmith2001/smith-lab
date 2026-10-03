@@ -37,27 +37,6 @@ Application Runtime
 
 ## Repository Layout
 
-```text
-docs/
-    Documentation
-
-infrastructure/
-├── ansible/
-│   ├── caddy/
-│   ├── domain-join/
-│   ├── gitlab/
-│   ├── podman/
-│   └── vaultwarden/
-│
-└── opentofu/
-    ├── dns.tf
-    ├── hosts.tf
-    ├── services.tf
-    ├── networks.tf
-    ├── storage.tf
-    └── variables.tf
-```
-
 ## Domain Model
 
 ### Hosts
