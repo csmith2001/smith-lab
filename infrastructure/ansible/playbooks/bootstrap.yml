@@ -4,4 +4,10 @@
   gather_facts: true
 
   roles:
-    - svc_infra
+    - role: bootstrap
+    - role: domain_add
+      when: domain_add | default(false) | bool
+    - role: domain_join
+      when: domain_join | default(false) | bool
+    - role: add_services
+      when: add_services | default(false) | bool
