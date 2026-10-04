@@ -14,18 +14,18 @@
   
 - name: Render compose file
   template:
-    src: caddy-compose.yml.j2
+    src: caddy/caddy-compose.yml.j2
     dest: "{{ infra_root }}/containers/caddy/compose.yml"
 
 - name: Render Caddyfile
   template:
-    src: Caddyfile.j2
+    src: caddy/Caddyfile.j2
     dest: "{{ infra_root }}/containers/caddy/config/Caddyfile"
 
 - name: Render nftables
   become: true
   template:
-    src: nftables.conf.j2
+    src: firewall/nftables.conf.j2
     dest: /etc/nftables.conf
 
 - name: Validate nftables configuration

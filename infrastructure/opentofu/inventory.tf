@@ -37,12 +37,12 @@ locals {
   # ---------------------------------------------------------
   hosts = {
     smith-lab = {
-      ansible_host                 = "SMITH_LAB_HOST_IP"
-      ansible_host_type            = "server"
-      ansible_network              = "lan"
-      ansible_user                 = "svc_infra"
-      ansible_ssh_private_key_file = "/root/.ssh/svc_infra.smith_lab.key"
-      ansible_managed              = true
+      host_ip                      = "SMITH_LAB_HOST_IP"
+      ansible_host                 = "host.containers.internal"
+      ansible_ssh_private_key_file = "/root/.ssh/svc_infra.key"
+      host_type                    = "server"
+      network                      = "lan"
+      managed                      = true
       ansible_runner               = true
       critical                     = true
       # --------------------
@@ -77,12 +77,11 @@ locals {
     }
     # ------------------------------------------------------
     fedora-desktop = {
-      ansible_host                 = "FEDORA_DESKTOP_HOST_IP"
-      ansible_host_type            = "workstation"
-      ansible_network              = "lan"
-      ansible_user                 = "csmith-admin"
+      host_ip                      = "FEDORA_DESKTOP_HOST_IP"
+      host_type                    = "workstation"
+      network                      = "lan"
       ansible_ssh_private_key_file = "/root/.ssh/ansible.key"
-      ansible_managed              = true
+      managed                      = true
       ansible_runner               = true
       # ---------------
       disks    = {
@@ -105,10 +104,9 @@ locals {
     }
     # -------------------------
     fedora-dell = {
-      ansible_user                 = "csmith-admin"
-      ansible_host_type            = "workstation"
+      host_type                    = "workstation"
       ansible_ssh_private_key_file = "/root/.ssh/ansible.key"
-      ansible_managed              = true
+      managed                      = true
       ansible_runner               = true
       mobile                       = true
       # -----------------
@@ -120,28 +118,28 @@ locals {
     }
     # ---------------------------
     nvr  = {
-      ansible_host      = "NVR_HOST_IP"
-      ansible_network   = "lan"
-      ansible_host_type = "security"
+      host_ip           = "NVR_HOST_IP"
+      network           = "lan"
+      host_type         = "security"
       critical          = true
     }
   }
   # ----------------------------------------------------
   invalid_host_types = {
     for host_name, host in local.hosts :
-    host_name => host.ansible_host_type
-    if !contains(keys(local.host_types), host.ansible_host_type)
+    host_name => host.host_type
+    if !contains(keys(local.host_types), host.host_type)
   }
   # -------------------------------------------------------
   inventory = {
     all = {
       children = {
-        for ansible_host_type, config in local.host_types :
+        for host_type, config in local.host_types :
         config.group => {
           hosts = {
             for host_name, host in local.hosts :
-            host_name => { }
-            if host.ansible_host_type == ansible_host_type
+            host_name => {}
+            if host.host_type == host_type
           }
         }
       }
@@ -154,8 +152,8 @@ resource "terraform_data" "validate_groups" {
     precondition {
       condition     = length(local.invalid_host_types) == 0
       error_message = join("\n", [
-        for host_name, ansible_host_type in local.invalid_host_types :
-        "${host_name} has an invalid ansible_host_type: ${ansible_host_type}"
+        for host_name, host_type in local.invalid_host_types :
+        "${host_name} has an invalid host_type: ${host_type}"
       ])
     }
   }

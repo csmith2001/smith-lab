@@ -19,32 +19,22 @@
       }}
 
 - name: Create infra root
-  file:
-    path: "{{ infra_root }}"
-    state: directory
-    owner: svc_infra
-    group: infra_staff
-    mode: "2755"
-  become: true
+  include_tasks: create-directory.yml
+  vars:
+    directory_path: "{{ infra_root }}"
 
 - name: Create infra directories
-  file:
-    path: "{{ infra_root }}/{{ volume }}"
-    state: directory
-    owner: svc_infra
-    group: infra_staff
-    mode: "2755"
+  include_tasks: create-directory.yml
+  vars:
+    directory_path: "{{ infra_root }}/{{ volume }}"
   loop: "{{ volumes }}"
   loop_control:
     loop_var: volume
 
 - name: Create service storage
-  file:
-    path: "{{ infra_root }}/containers/{{ item.key }}"
-    state: directory
-    owner: svc_infra
-    group: infra_staff
-    mode: "2755"
+  include_tasks: create-directory.yml
+  vars:
+    directory_path: "{{ infra_root }}/containers/{{ item.key }}"
   loop: "{{ container_services }}"
 
 - name: Clone repositories
@@ -54,3 +44,4 @@
     version: "{{ item.value.branch }}"
     update: true
   loop: "{{ repositories | dict2items }}"
+  when: inventory_hostname != networks.lan.domain.dns_host

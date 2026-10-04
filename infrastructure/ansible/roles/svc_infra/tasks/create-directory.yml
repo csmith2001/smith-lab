@@ -1,0 +1,8 @@
+- name: Create directory
+  become: true
+  file:
+    path: "{{ directory_path }}"
+    state: directory
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_group }}"
+    mode: "2755"
