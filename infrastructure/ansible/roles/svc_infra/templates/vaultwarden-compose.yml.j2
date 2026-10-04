@@ -7,11 +7,11 @@ services:
       WEBSOCKET_ENABLED: "true"
       SIGNUPS_ALLOWED: "true"
       SIGNUPS_VERIFY: "false"
-      ADMIN_TOKEN: "$$argon2id$$v=19$$m=65540,t=3,p=4$$4WO5gaE+weMcQe0PUC93o/LLyz42z93LhGlqKUSogP8$$KEV8Jk4+MLcOGOF/9d5ojIxz56rvgVM7rA/hBv3kjuc"
+      ADMIN_TOKEN: 
     volumes:
       - ./data:/data
     ports:
-      - "127.0.0.1:8081:80"
+      - "8081:80"
     networks:
       - infra_net
 

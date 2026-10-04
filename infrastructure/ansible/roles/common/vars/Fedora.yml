@@ -1,5 +1,0 @@
-samba_packages:
-  - samba
-  - samba-dc
-  - samba-dc-bind-dlz
-  - krb5-workstation

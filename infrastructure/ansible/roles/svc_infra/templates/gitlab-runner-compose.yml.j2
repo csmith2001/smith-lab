@@ -9,6 +9,8 @@ services:
 
     volumes:
       - ./gitlab:/etc/gitlab-runner:z
+    networks:
+      - infra_net
 
   gitlab-runner-smithlab:
     image: docker.io/gitlab/gitlab-runner:latest
@@ -20,3 +22,8 @@ services:
 
     volumes:
       - ./smithlab:/etc/gitlab-runner:z
+    networks:
+      - infra_net
+networks:
+  infra_net:
+    external: true

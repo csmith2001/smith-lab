@@ -1,11 +1,6 @@
-variable "cloudflare_api_token" {
-  sensitive = true
-}
-# ------------------------
 variable "public_ip" {}
+variable "domain_ip" {}
 variable "zone_id" {}
-variable "domain_name" {}
-variable "storage_root" {}
 # -------------------------------------
 terraform {
   required_providers {

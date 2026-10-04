@@ -18,12 +18,32 @@
         | list
       }}
 
+- name: Create infra root
+  file:
+    path: "{{ infra_root }}"
+    state: directory
+    owner: svc_infra
+    group: infra_staff
+    mode: "2755"
+  become: true
+
+- name: Create infra directories
+  file:
+    path: "{{ infra_root }}/{{ volume }}"
+    state: directory
+    owner: svc_infra
+    group: infra_staff
+    mode: "2755"
+  loop: "{{ volumes }}"
+  loop_control:
+    loop_var: volume
+
 - name: Create service storage
   file:
     path: "{{ infra_root }}/containers/{{ item.key }}"
     state: directory
-    owner: root
-    group: root
+    owner: svc_infra
+    group: infra_staff
     mode: "2755"
   loop: "{{ container_services }}"
 

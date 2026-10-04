@@ -30,17 +30,14 @@ locals {
       provides = {
         ldap = {
           protocol           = "ldap"
-          port               = 389
         }
         # -------------------------------
         kerberos = {
           protocol           = "kerberos"
-          port               = 88
         }
         # --------------------------
         dns = {
           protocol           = "dns"
-          port               = 53
         }
       }
       # -------------------------
@@ -63,7 +60,6 @@ locals {
       provides = {
         database = {
           protocol           = "postgres"
-          port               = 5432
         }
       }
       # ----------------------------------
@@ -97,7 +93,6 @@ locals {
         provides = {
           secrets = {
             protocol         = "https"
-            port             = 8200
           }
         }
         # -------------------------------
@@ -144,7 +139,6 @@ locals {
       provides = {
         api = {
           protocol           = "https"
-          port               = 443
         }
       }
       # ---------------------------------

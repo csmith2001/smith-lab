@@ -11,3 +11,8 @@ services:
     cap_add:
       - IPC_LOCK
     command: server
+    networks:
+      - infra_net
+networks:
+  infra_net:
+    external: true

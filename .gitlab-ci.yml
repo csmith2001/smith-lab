@@ -1,16 +1,7 @@
 build:
   script:
-    - mkdir -p "${INFRA_ROOT}"
-    - mkdir -p "${INFRA_ROOT}/containers"
-    - mkdir -p "${INFRA_ROOT}/configs"
-    - mkdir -p "${INFRA_ROOT}/media"
-    - mkdir -p "${INFRA_ROOT}/logs"
-    - mkdir -p "${INFRA_ROOT}/backups"
-    - mkdir -p "${INFRA_ROOT}/samba"
-    - mkdir -p "${INFRA_ROOT}/repos"
+    - echo "hello world"
 
 deploy:
   script:
     - echo "hello world"
-    # - tofu apply -auto-approve
-    # - podman compose up -d
