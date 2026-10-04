@@ -9,7 +9,7 @@
         | list
       }}
 
-- name: Determine container services
+- name: Discover container services
   set_fact:
     container_services: >-
       {{
@@ -18,23 +18,39 @@
         | list
       }}
 
-- name: Display host services
-  debug:
-    msg: "{{ host_services }}"
+- name: Create infra root
+  file:
+    path: "{{ infra_root }}"
+    state: directory
+    owner: svc_infra
+    group: infra_staff
+    mode: "2755"
+  become: true
+
+- name: Create infra directories
+  file:
+    path: "{{ infra_root }}/{{ volume }}"
+    state: directory
+    owner: svc_infra
+    group: infra_staff
+    mode: "2755"
+  loop: "{{ volumes }}"
+  loop_control:
+    loop_var: volume
 
 - name: Create service storage
   file:
-    path: "/srv/infra/containers/{{ item.key }}"
+    path: "{{ infra_root }}/containers/{{ item.key }}"
     state: directory
-    owner: root
-    group: root
+    owner: svc_infra
+    group: infra_staff
     mode: "2755"
   loop: "{{ container_services }}"
 
 - name: Clone repositories
   git:
     repo: "{{ item.value.url }}"
-    dest: "/srv/infra/repos/{{ item.key }}"
+    dest: "{{ infra_root }}/repos/{{ item.key }}"
     version: "{{ item.value.branch }}"
     update: true
   loop: "{{ repositories | dict2items }}"

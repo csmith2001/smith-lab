@@ -4,7 +4,6 @@ services:
     image: smith-lab-opentofu:latest
     build:
       context: ./infrastructure/opentofu/install
-    container_name: tofu
     stdin_open: true
     tty: true
     env_file:
@@ -19,8 +18,9 @@ services:
     image: smith-lab-ansible:latest
     build:
       context: ./infrastructure/ansible
-    container_name: ansible
     stdin_open: true
+    depends_on:
+      - opentofu
     tty: true
     env_file:
       - .env

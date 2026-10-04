@@ -1,0 +1,24 @@
+services:
+  postgres:
+    image: postgres:17
+    restart: unless-stopped
+    ports:
+        - "5432:5432"
+    environment:
+      POSTGRES_DB: "{{ service.bootstrap.database }}"
+      POSTGRES_USER: "{{ service.bootstrap.username }}"
+      POSTGRES_PASSWORD: "{{ service.bootstrap.password }}"
+    volumes:
+      - "{{ infra_root }}/containers/postgres/data:/var/lib/postgresql/data"
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - "pg_isready -U {{ service.bootstrap.username }}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      networks:
+        - infra_net
+networks:
+  infra_net:
+    external: true

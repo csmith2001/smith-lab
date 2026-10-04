@@ -1,0 +1,27 @@
+# Delete every firewall rule that currently exists and replace it with whatever is in this file
+flush ruleset
+
+table inet filter {
+    chain input {
+        type filter hook input priority filter;
+    }
+
+    chain forward {
+        type filter hook forward priority filter;
+    }
+
+    chain output {
+        type filter hook output priority filter;
+    }
+}
+
+# Rootless Caddy redirects
+table ip nat {
+    chain prerouting {
+        type nat hook prerouting priority dstnat;
+
+{% for rule in firewall.redirects %}
+        {{ rule.protocol }} dport {{ rule.from_port }} redirect to {{ rule.to_port }}
+{% endfor %}
+    }
+}

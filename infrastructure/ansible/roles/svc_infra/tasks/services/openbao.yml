@@ -1,4 +1,4 @@
 ---
-- name: Caddy
+- name: OpenBao
   debug:
     msg: "Hello"

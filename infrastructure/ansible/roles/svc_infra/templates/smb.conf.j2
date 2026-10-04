@@ -1,0 +1,30 @@
+# Global parameters
+[global]
+  bind interfaces only = Yes
+  dns forwarder = {{ networks.lan.gateway }}
+  interfaces = {{ ansible_default_ipv4.interface }}
+  passdb backend = samba_dsdb
+  realm = {{ networks.lan.domain.name | upper }}
+  server role = active directory domain controller
+  workgroup = DEV
+  rpc_server:tcpip = no
+  rpc_daemon:spoolssd = embedded
+  rpc_server:spoolss = embedded
+  rpc_server:winreg = embedded
+  rpc_server:ntsvcs = embedded
+  rpc_server:eventlog = embedded
+  rpc_server:srvsvc = embedded
+  rpc_server:svcctl = embedded
+  rpc_server:default = external
+  winbindd:use external pipes = true
+  idmap config * : backend = tdb
+  map archive = No
+  vfs objects = dfs_samba4 acl_xattr
+
+[sysvol]
+  path = /var/lib/samba/sysvol
+  read only = No
+
+[netlogon]
+  path = /var/lib/samba/sysvol/{{ networks.lan.domain.name }}/scripts
+  read only = No

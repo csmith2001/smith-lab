@@ -1,0 +1,26 @@
+samba_packages:
+  Debian:
+    - samba
+    - krb5-user
+    - winbind
+  Fedora:
+    - 'samba'
+    - 'samba-dc'
+    - 'samba-dc-bind-dlz'
+    - 'krb5-workstation'
+  RedHat:
+    - 'samba'
+    - 'samba-dc'
+    - 'samba-dc-bind-dlz'
+    - 'krb5-workstation'
+
+samba_services:
+  Debian:
+    - samba-ad-dc
+  Fedora:
+    - samba
+  RedHat:
+    - samba
+
+ad_domain: "{{ networks.lan.domain.name }}"
+ad_dns_server: "{{ networks.lan.domain.host_ip }}"
