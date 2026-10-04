@@ -1,0 +1,16 @@
+services:
+  caddy:
+    image: docker.io/library/caddy:2.7
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+      - "8443:443"
+    volumes:
+      - ./config:/config
+      - ./config/Caddyfile:/etc/caddy/Caddyfile:ro
+      - ./data:/data
+    networks:
+      - infra_net
+networks:
+  infra_net:
+    external: true

@@ -1,0 +1,20 @@
+services:
+  vaultwarden:
+    image: vaultwarden/server:latest
+    container_name: vaultwarden
+    restart: unless-stopped
+    environment:
+      WEBSOCKET_ENABLED: "true"
+      SIGNUPS_ALLOWED: "true"
+      SIGNUPS_VERIFY: "false"
+      ADMIN_TOKEN: 
+    volumes:
+      - ./data:/data
+    ports:
+      - "8081:80"
+    networks:
+      - infra_net
+
+networks:
+  infra_net:
+    external: true

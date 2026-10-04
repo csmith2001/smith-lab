@@ -1,0 +1,18 @@
+services:
+  openbao:
+    image: ghcr.io/openbao/openbao:latest
+    restart: unless-stopped
+    ports:
+      - "8200:8200"
+    depends_on:
+      - postgres
+    volumes:
+      - {{ infra_root }}/configs/openbao:/openbao/config
+    cap_add:
+      - IPC_LOCK
+    command: server
+    networks:
+      - infra_net
+networks:
+  infra_net:
+    external: true

@@ -1,0 +1,11 @@
+nvr.smith-lab.xyz {
+	reverse_proxy NVR_HOST_IP:80
+}
+
+vault.smith-lab.xyz {
+    reverse_proxy GITLAB_HOST_IP:8081 {
+        header_up X-Real-IP {remote_host}
+        header_up X-Forwarded-For {remote_host}
+        header_up X-Forwarded-Proto {scheme}
+    }
+}
