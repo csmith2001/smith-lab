@@ -1,4 +1,39 @@
 ---
+- name: Playbook Start
+  debug:
+    msg:
+      - "Host: {{ inventory_hostname }}"
+      - "OS: {{ ansible_facts['os_family'] }}"
+      - "Infra root: {{ infra_root }}"
+      - "Disks: {{ disks }}"
+
+- name: Install bootstrap packages
+  package:
+    name:
+      - git
+      - podman
+      - podman-compose
+      - curl
+      - rsync
+      - jq
+      - unzip
+    state: present
+
+- name: Enable podman socket
+  systemd:
+    name: podman.socket
+    enabled: true
+    state: started
+
+- name: Create infra network
+  command:
+    cmd: podman network create infra_net
+  register: podman_network
+  changed_when: podman_network.rc == 0
+  failed_when:
+    - podman_network.rc != 0
+    - "'already exists' not in podman_network.stderr"
+
 - name: Discover host services
   set_fact:
     host_services: >-
@@ -36,6 +71,22 @@
   vars:
     directory_path: "{{ infra_root }}/containers/{{ item.key }}"
   loop: "{{ container_services }}"
+
+- name: Render nftables
+  become: true
+  template:
+    src: nftables.conf.j2
+    dest: /etc/nftables.conf
+
+- name: Validate nftables configuration
+  become: true
+  command:
+    argv:
+      - nft
+      - -c
+      - -f
+      - /etc/nftables.conf
+  changed_when: false
 
 - name: Clone repositories
   git:

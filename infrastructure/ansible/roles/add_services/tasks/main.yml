@@ -1,0 +1,4 @@
+---
+- name: Deploy services
+  include_tasks: "services/{{ item.key }}.yml"
+  loop: "{{ host_services }}"

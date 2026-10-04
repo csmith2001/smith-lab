@@ -22,22 +22,6 @@
     src: caddy/Caddyfile.j2
     dest: "{{ infra_root }}/containers/caddy/config/Caddyfile"
 
-- name: Render nftables
-  become: true
-  template:
-    src: firewall/nftables.conf.j2
-    dest: /etc/nftables.conf
-
-- name: Validate nftables configuration
-  become: true
-  command:
-    argv:
-      - nft
-      - -c
-      - -f
-      - /etc/nftables.conf
-  changed_when: false
-
 - name: Start Caddy
   command: podman-compose up -d
   args:
