@@ -4,9 +4,9 @@
   dns forwarder = {{ networks.lan.gateway }}
   interfaces = {{ ansible_default_ipv4.interface }}
   passdb backend = samba_dsdb
-  realm = {{ networks.lan.domain.name | upper }}
+  realm = {{ networks.lan.domain.ad_name | upper }}
   server role = active directory domain controller
-  workgroup = DEV
+  workgroup = {{ networks.lan.domain.ad_name.split('.')[0] | upper }}
   rpc_server:tcpip = no
   rpc_daemon:spoolssd = embedded
   rpc_server:spoolss = embedded
@@ -16,15 +16,17 @@
   rpc_server:srvsvc = embedded
   rpc_server:svcctl = embedded
   rpc_server:default = external
+  winbind use default domain = yes
   winbindd:use external pipes = true
   idmap config * : backend = tdb
   map archive = No
   vfs objects = dfs_samba4 acl_xattr
+  idmap_ldb:use rfc2307 = yes
 
 [sysvol]
   path = /var/lib/samba/sysvol
   read only = No
 
 [netlogon]
-  path = /var/lib/samba/sysvol/{{ networks.lan.domain.name }}/scripts
+  path = /var/lib/samba/sysvol/{{ networks.lan.domain.ad_name }}/scripts
   read only = No

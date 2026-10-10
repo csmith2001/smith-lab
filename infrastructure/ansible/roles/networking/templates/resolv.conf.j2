@@ -2,4 +2,4 @@
 # /etc/resolv.conf.head can replace this line
 domain {{ networks.lan.domain.ad_name }}
 search {{ networks.lan.domain.ad_name }}
-nameserver {{ networks.lan.domain.host_ip }}
+nameserver {{ resolver_ip }}

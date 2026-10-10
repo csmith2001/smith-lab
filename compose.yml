@@ -3,7 +3,7 @@ services:
   opentofu:
     image: smith-lab-opentofu:latest
     build:
-      context: ./infrastructure/opentofu/install
+      context: ./infrastructure/opentofu
     stdin_open: true
     tty: true
     env_file:
@@ -28,7 +28,7 @@ services:
       ANSIBLE_CONFIG: /ansible/infrastructure/ansible/ansible.cfg
     volumes:
       - .:/ansible:z
-      - ${HOME}/.ssh:/root/.ssh:ro,Z
+      - ${HOME}/.ssh/tmp:/root/.ssh/ansible:ro,Z
     working_dir: /ansible/infrastructure/ansible
     command: /bin/bash
     

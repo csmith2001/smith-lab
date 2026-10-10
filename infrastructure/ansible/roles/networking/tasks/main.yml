@@ -1,0 +1,22 @@
+---
+- name: Render nftables
+  become: true
+  template:
+    src: nftables.conf.j2
+    dest: /etc/nftables.conf
+
+- name: Validate nftables configuration
+  become: true
+  command:
+    argv:
+      - nft
+      - -c
+      - -f
+      - /etc/nftables.conf
+  changed_when: false
+
+- name: Render resolv.conf
+  become: true
+  template:
+    src: resolv.conf.j2
+    dest: /etc/resolv.conf

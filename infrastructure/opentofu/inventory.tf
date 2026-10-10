@@ -39,9 +39,10 @@ locals {
     smith-lab = {
       host_ip                      = var.smith-lab_host_ip
       ansible_host                 = "host.containers.internal"
-      ansible_ssh_private_key_file = "/root/.ssh/svc_infra.key"
+      ansible_ssh_private_key_file = "/root/.ssh/ansible"
       host_type                    = "server"
       network                      = "lan"
+      samba_ad_dc                  = true
       managed                      = true
       ansible_runner               = true
       critical                     = true

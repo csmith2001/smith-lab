@@ -1,4 +1,25 @@
 ---
-- name: Add DC
-  debug:
-    msg: "Hello"
+- name: Install samba ad dc packages
+  become: true
+  package:
+    name: "{{ samba_ad_dc_packages[ansible_facts['os_family']] }}"
+    state: present
+
+- name: Enable samba services
+  become: true
+  systemd:
+    name: "{{ item }}"
+    enabled: true
+    state: started
+  loop: "{{ samba_ad_dc_services[ansible_facts['os_family']] }}"
+
+- name: Get authselect profile
+  become: true
+  command: authselect current
+  register: authselect_current
+  changed_when: false
+
+- name: Configure winbind authentication
+  become: true
+  command: authselect select winbind --force
+  when: "'Profile ID: winbind' not in authselect_current.stdout"

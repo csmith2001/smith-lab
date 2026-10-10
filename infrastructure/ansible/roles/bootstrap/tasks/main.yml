@@ -8,6 +8,7 @@
       - "Disks: {{ disks }}"
 
 - name: Install bootstrap packages
+  become: true
   package:
     name:
       - git
@@ -17,9 +18,13 @@
       - rsync
       - jq
       - unzip
+      - zsh
+      - fish
+      - ksh
     state: present
 
 - name: Enable podman socket
+  become: true
   systemd:
     name: podman.socket
     enabled: true
@@ -71,28 +76,6 @@
   vars:
     directory_path: "{{ infra_root }}/containers/{{ item.key }}"
   loop: "{{ container_services }}"
-
-- name: Render nftables
-  become: true
-  template:
-    src: nftables.conf.j2
-    dest: /etc/nftables.conf
-
-- name: Validate nftables configuration
-  become: true
-  command:
-    argv:
-      - nft
-      - -c
-      - -f
-      - /etc/nftables.conf
-  changed_when: false
-
-- name: Render resolv.conf
-  become: true
-  template:
-    src: resolv.conf.j2
-    dest: /etc/resolv.conf
 
 - name: Clone repositories
   git:

@@ -22,6 +22,7 @@ resource "local_file" "host_vars" {
     ansible_user                 = "svc_infra"
     ansible_group                = "infra_staff"
     ansible_ssh_private_key_file = try(each.value.ansible_ssh_private_key_file, null)
+    samba_ad_dc                  = try(each.value.samba_ad_dc, false)
     network                      = try(each.value.network, null)
     managed                      = try(each.value.managed, false)
     ansible_runner               = try(each.value.ansible_runner, false)

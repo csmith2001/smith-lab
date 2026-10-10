@@ -30,8 +30,6 @@
       Password for.*: "{{ ad_join_password }}"
   when: networks.lan.domain.ad_name not in realm_list.stdout
 
-- name: Test identity lookup
+- name: Verify realm joined
   become: true
-  command:
-    cmd: getent passwd "csmith"
-  changed_when: false
+  command: realm list
