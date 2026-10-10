@@ -1,4 +1,37 @@
 ---
-- name: Domain Join
-  debug:
-    msg: "Hello"
+- name: Install domain member packages
+  become: true
+  package:
+    name: "{{ domain_join_packages[ansible_facts['os_family']] }}"
+    state: present
+
+- name: Discover domain
+  become: true
+  command:
+    cmd: realm discover {{ networks.lan.domain.ad_name }}
+  register: realm_discovery
+  changed_when: false
+
+- name: Check domain membership
+  become: true
+  command:
+    cmd: realm list
+  register: realm_list
+  changed_when: false
+
+- name: Join domain
+  become: true
+  expect:
+    command: >
+      realm join
+      --user=Administrator
+      {{ networks.lan.domain.ad_name }}
+    responses:
+      Password for.*: "{{ ad_join_password }}"
+  when: networks.lan.domain.ad_name not in realm_list.stdout
+
+- name: Test identity lookup
+  become: true
+  command:
+    cmd: getent passwd "csmith"
+  changed_when: false

@@ -88,6 +88,12 @@
       - /etc/nftables.conf
   changed_when: false
 
+- name: Render resolv.conf
+  become: true
+  template:
+    src: resolv.conf.j2
+    dest: /etc/resolv.conf
+
 - name: Clone repositories
   git:
     repo: "{{ item.value.url }}"

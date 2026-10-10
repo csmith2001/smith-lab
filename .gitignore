@@ -8,7 +8,7 @@
 terraform.tfvars
 
 # Ansible inventory files
-**/inventories/**/**.yml
+**/inventories/*
 
 # Secrets
 secrets.yaml

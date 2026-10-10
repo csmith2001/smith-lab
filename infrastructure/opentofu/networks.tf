@@ -5,7 +5,7 @@ locals {
       gateway = "192.168.0.1"
       # --------------------------------
       domain = {
-        ad_name     = "dev.smith-lab.local"
+        ad_name     = "dev.smith-lab.xyz"
         public_name = "smith-lab.xyz"
         dns_host    = "smith-lab"
         host_ip     = var.domain_ip

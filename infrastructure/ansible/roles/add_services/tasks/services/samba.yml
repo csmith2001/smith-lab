@@ -1,4 +1,0 @@
----
-- name: Samba AD
-  debug:
-    msg: "Hello"

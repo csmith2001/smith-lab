@@ -37,7 +37,7 @@ locals {
   # ---------------------------------------------------------
   hosts = {
     smith-lab = {
-      host_ip                      = "SMITH_LAB_HOST_IP"
+      host_ip                      = var.smith-lab_host_ip
       ansible_host                 = "host.containers.internal"
       ansible_ssh_private_key_file = "/root/.ssh/svc_infra.key"
       host_type                    = "server"
@@ -77,7 +77,7 @@ locals {
     }
     # ------------------------------------------------------
     fedora-desktop = {
-      host_ip                      = "FEDORA_DESKTOP_HOST_IP"
+      host_ip                      = var.fedora-desktop_host_ip
       host_type                    = "workstation"
       network                      = "lan"
       ansible_ssh_private_key_file = "/root/.ssh/ansible.key"
@@ -118,7 +118,7 @@ locals {
     }
     # ---------------------------
     nvr  = {
-      host_ip           = "NVR_HOST_IP"
+      host_ip           = var.nvr_host_ip
       network           = "lan"
       host_type         = "security"
       critical          = true

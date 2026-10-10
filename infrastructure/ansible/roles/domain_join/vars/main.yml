@@ -1,0 +1,38 @@
+ad_join_password: "{{ lookup('env', 'AD_JOIN_PASSWORD') }}"
+
+domain_join_packages:
+  Debian:
+    - realmd
+    - sssd
+    - sssd-tools
+    - adcli
+    - libnss-sss
+    - libpam-sss
+    - krb5-user
+    - packagekit
+    - samba-common-bin
+    - python3-pexpect
+
+  Fedora:
+    - realmd
+    - sssd
+    - sssd-tools
+    - adcli
+    - oddjob
+    - oddjob-mkhomedir
+    - samba-common-tools
+    - krb5-workstation
+    - authselect
+    - python3-pexpect
+
+  RedHat:
+    - realmd
+    - sssd
+    - sssd-tools
+    - adcli
+    - oddjob
+    - oddjob-mkhomedir
+    - samba-common-tools
+    - krb5-workstation
+    - authselect
+    - python3-pexpect

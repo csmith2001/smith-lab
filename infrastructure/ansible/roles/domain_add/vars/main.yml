@@ -1,3 +1,4 @@
+---
 samba_ad_dc_packages:
   Debian:
     - samba
@@ -21,24 +22,3 @@ samba_ad_dc_services:
     - samba
   RedHat:
     - samba
-
-samba_member_packages:
-  Debian:
-    - realmd
-    - sssd
-    - adcli
-    - krb5-user
-  Fedora:
-  - realmd
-  - sssd
-  - adcli
-  - oddjob
-  - oddjob-mkhomedir
-  - krb5-workstation
-  RedHat:
-  - realmd
-  - sssd
-  - adcli
-  - oddjob
-  - oddjob-mkhomedir
-  - krb5-workstation
