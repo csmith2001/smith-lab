@@ -1,17 +1,44 @@
-
 # Smith Docs
 
-Documentation is essential to be able to learn from what you are building. The method for documentation is a series of markdown files hosted using Obsidian and MkDocs.
+Documentation is essential to be able to learn from what you are building. The method for documentation is a series of markdown files hosted using MkDocs. 
 
 ---
 
-## Download and Install Obsidian
+## How to Edit Docs
+
+### VsCode
+
+VsCode on its own can certainly be used to edit your Markdown files but, no one wants to view markdown as actual markdown source.
+
+I like this as it offers an all-in-one solution.
+
+#### Recommended Extensions
+
+To avoid the raw markdown, we will make use of several markdown extensions available on VsCode.
+
+* [Office Viewer](https://marketplace.visualstudio.com/items?itemName=cweijan.vscode-office)
+* [markdownlint](https://marketplace.visualstudio.com/items?itemName=DavidAnson.vscode-markdownlint)
+
+### Obsidian
+
+Obsidian is primarily a Markdown Editor + Viewer, Knowledge Graph, Wiki using local file storage for markdown.
+
+The flow can be thought of as such:
+
+```
+Obsidian    = Authoring
+Git         = Source Control
+MkDocs      = Static Site Generator
+Caddy/Nginx = Hosting
+```
+
+The same files can be edited by Obsidian, viewed by VS Code, versioned by Git, and published by MkDocs.
 
 Obsidian can be obtained through several methods and since the tech stack is Fedora focused, we wil be covering that.
 
 ---
 
-### Install Methods
+#### Install Methods
 
 On Fedora, there are a few methods at our disposal. All of which can be downloaded from this [link](https://github.com/obsidianmd/obsidian-releases/releases).
 
@@ -36,7 +63,7 @@ Selecting a folder through the file picker grants access via the XDG Portal (`/r
 
 ###### View Current Flatpak Filesystem Permissions
 
-```
+```Shell
 flatpak info --show-permissions md.obsidian.Obsidian | grep -i filesystems
 ```
 
@@ -44,21 +71,19 @@ flatpak info --show-permissions md.obsidian.Obsidian | grep -i filesystems
 
 Flatpak filesystem overrides are additive. Granting access to another directory does not remove previously granted directories. Use `--reset` to clear all custom overrides.
 
-```
+```Shell
 flatpak override --user \
-  --filesystem=~/storage/smith-lab/docs \
+  --filesystem=/storage/smith-lab/docs \
   md.obsidian.Obsidian
 ```
 
 ###### Reset All Overrides
 
-```
+```Shell
 flatpak override --user --reset md.obsidian.Obsidian
 ```
 
-If not adding an additional filesystem to sandbox permissions, consider `ln -s`.
-
-#### Install Obsidian Using AppImage
+##### Install Obsidian Using AppImage
 
 Recommended when:
 
@@ -66,7 +91,7 @@ Recommended when:
 * Running from removable storage
 * Avoiding Flatpak sandboxing
 
-##### x86_64
+###### x86_64
 
 ```Shell
 cd ~/Downloads
@@ -81,7 +106,7 @@ chmod +x Obsidian-*.AppImage
 ./Obsidian-*.AppImage
 ```
 
-##### aarch64
+###### aarch64
 
 ```Shell
 cd ~/Downloads
@@ -96,7 +121,7 @@ chmod +x Obsidian-*.AppImage
 ./Obsidian-*.AppImage
 ```
 
-#### Install Using Tar Archive
+##### Install Using Tar Archive
 
 Recommended when:
 
@@ -104,7 +129,7 @@ Recommended when:
 * Managing software manually
 * Avoiding Flatpak dependencies
 
-##### x86_64
+###### x86_64
 
 ```Shell
 cd ~/Downloads
@@ -121,7 +146,7 @@ cd obsidian-*/
 ./obsidian
 ```
 
-##### aarch64
+###### aarch64
 
 ```Shell
 cd ~/Downloads
@@ -137,7 +162,3 @@ rm -rf obsidian-*.tar.gz
 cd obsidian-*/
 ./obsidian
 ```
-
----
-
-## Test
