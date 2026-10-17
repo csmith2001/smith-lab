@@ -19,7 +19,7 @@ resource "local_file" "host_vars" {
     host_ip                      = try(each.value.host_ip, null)
     host_type                    = try(each.value.host_type, null)
     ansible_host                 = try(each.value.ansible_host, "${each.key}.${local.networks.lan.domain.ad_name}")
-    ansible_user                 = "svc_infra"
+    ansible_user                 = "admin"
     ansible_group                = "infra_staff"
     ansible_ssh_private_key_file = try(each.value.ansible_ssh_private_key_file, null)
     samba_ad_dc                  = try(each.value.samba_ad_dc, false)

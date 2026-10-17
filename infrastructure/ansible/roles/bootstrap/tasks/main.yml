@@ -78,10 +78,11 @@
   loop: "{{ container_services }}"
 
 - name: Clone repositories
+  become: true
+  become_user: "svc_infra"
   git:
     repo: "{{ item.value.url }}"
     dest: "{{ infra_root }}/repos/{{ item.key }}"
     version: "{{ item.value.branch }}"
     update: true
   loop: "{{ repositories | dict2items }}"
-  when: inventory_hostname != networks.lan.domain.dns_host
