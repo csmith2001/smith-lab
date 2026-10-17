@@ -40,15 +40,15 @@ lsblk -o NAME,SIZE,FSTYPE,MOUNTPOINTS
 
 ```
 NAME          SIZE FSTYPE            MOUNTPOINTS
-nvme0n1     931.5G               
+nvme0n1     931.5G             
 ├─nvme0n1p1     1G vfat              /boot/efi
 ├─nvme0n1p2     2G linux_raid_member 
 │ └─md0         2G ext4              /boot
 └─nvme1n1p3 928.5G linux_raid_member 
   └─md1     928.4G btrfs             /
   
-nvme1n1     931.5G               
-├─nvme1n1p1     1G vfat          
+nvme1n1     931.5G             
+├─nvme1n1p1     1G vfat        
 ├─nvme1n1p2     2G linux_raid_member 
 │ └─md0         2G ext4              /boot
 └─nvme0n1p3 928.5G linux_raid_member 
@@ -59,8 +59,7 @@ nvme1n1     931.5G
 
 #### md0
 
-Mounted as:
-/boot
+**Mounted as:** `/boot`
 
 ```
 md0
@@ -71,8 +70,7 @@ md0
 
 #### md1
 
-Mounted as:
-/
+Mounted as: `/`
 
 ```
 md1
